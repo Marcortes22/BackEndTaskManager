@@ -29,7 +29,7 @@ namespace Application.TaskLists.Queries.GetAllTaskListWithCompletedTasks
                 string userId = StringFunctions.GetUserSub(request.UserSubProvider);
 
                 var taskLists = await _unitOfWork.taskLists.GetAllTaskListWithCompletedTasks(userId);
-
+            
                 List<TaskListDto> list = _mapper.Map<List<TaskListDto>>(taskLists);
 
                 return new BaseResponse<List<TaskListDto>>(list, true, "TaskLists retrieved successfully");
