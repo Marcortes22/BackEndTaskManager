@@ -41,28 +41,18 @@ namespace Infrastructure.Repositories.PatternRepository
             }
         }
 
-        public async Task<bool> DeleteAsync(TKey id)
+        public async Task DeleteAsync(T entity)
         {
 
             try
-            {
-                var entity = await _dbSet.FindAsync(id);
-
-                if (entity != null)
-                {
-                    _dbSet.Remove(entity);
-                    return true;
-                }
-                else
-                {
-                    _logger.LogWarning($"Entity with id {id} not found for deletion", id);
-                    return false;
-                }
+            {     
+               _dbSet.Remove(entity);
+ 
             }
             catch (Exception e)
             {
-                _logger.LogError(e, $"Error deleting entity with id {id}", id);
-                return false;
+               _logger.LogError(e, "Error deleting entity");
+                
             }
         }
 

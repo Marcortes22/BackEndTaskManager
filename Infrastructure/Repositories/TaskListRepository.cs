@@ -1,14 +1,11 @@
-﻿using Domain.Entities;
+﻿using Domain.Dtos.TaskLists;
+using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.DbContexts;
 using Infrastructure.Repositories.PatternRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Infrastructure.Repositories
 {
@@ -18,20 +15,45 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public async Task<TaskList> GetDefatultTaskListWithTasks(string userId)
+     
+
+        //public async Task<TaskList> GetTaskListWithTasks(int Id, string userId)
+        //{
+        //    return await _dbSet.Include(tl => tl.TaskItems).FirstOrDefaultAsync(tl => tl.Id == Id && tl.UserId == userId);
+        //}
+
+
+        public async Task<TaskList> GetTaskListById(int TaskListId, string userId)
         {
-            return await _dbSet.Include(tl => tl.TaskItems).FirstOrDefaultAsync(tl => tl.UserId == userId && tl.IsDefault ==true);
-            //return await FindOneAsync(tl => tl.UserId == userId && tl.IsDefault == true);
+            return await _dbSet.Include(tl => tl.TaskItems).FirstOrDefaultAsync(tl => tl.Id == TaskListId && tl.UserId == userId);
         }
 
-        public async Task<TaskList> GetTaskListWithTasks(int Id)
+        public async Task<List<TaskListsWithNumberOfTasks>> GetTaskListWithNumberOfTasks(string userId)
         {
-            return await _dbSet.Include(tl => tl.TaskItems).FirstOrDefaultAsync(tl => tl.Id == Id);
+            var taskLists = await _dbSet
+                .Include(tl => tl.TaskItems)
+                .Where(tl => tl.UserId == userId)
+                .Select(tl => new TaskListsWithNumberOfTasks
+                 {
+                     Id = tl.Id,
+                     Name = tl.Name,
+                     CountOfTasks = tl.TaskItems.Count(ti=> ti.IsCompleted == false),
+                    isDefault = tl.IsDefault
+                })
+                .OrderByDescending(tl => tl.isDefault)
+                .ToListAsync();
+
+            return taskLists;
         }
 
-        public async Task<IEnumerable<TaskList>> GetTMyTaskLists(string userId)
+        public Task<List<TaskList>> GetAllTaskListWithRelations(string userId)
         {
-            return await FindAsync(tl => tl.UserId == userId);
+            return _dbSet.Where(tl=> tl.UserId == userId).Include(tl => tl.TaskItems.Where(ti => ti.IsCompleted == false)).ToListAsync();
+        }
+
+        public Task<List<TaskList>> GetAllTaskListWithCompletedTasks(string userId)
+        {
+            return _dbSet.Where(tl => tl.UserId == userId).Include(tl => tl.TaskItems.Where(ti => ti.IsCompleted == true)).ToListAsync();
         }
     }
 }

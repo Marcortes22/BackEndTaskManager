@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.TaskLists.Commands.CreateTsksListCommand.Dtos
+namespace Application.TaskLists.Commands.UpdateTaskListCommand.Dto
 {
-    public class CreateTaskListResponse
+    public class UpdateTaskListDto
     {
+        public string? NewName { get; set; }
+
         public int Id { get; set; }
-        public string Name { get; set; }
     }
 }

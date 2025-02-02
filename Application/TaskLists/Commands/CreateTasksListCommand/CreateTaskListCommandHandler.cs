@@ -1,9 +1,10 @@
 ﻿using Application.Commons.Responses;
-using Application.TaskLists.Commands.CreateTsksListCommand.Dtos;
+using Application.TaskLists.Commands.CreateTasksListCommand.Response;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces.IUnitOfWork;
 using Domain.Utils;
+using FluentValidation;
 using MediatR;
 
 
@@ -13,12 +14,14 @@ namespace Application.TaskLists.Commands.CreateTsksListCommand
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IValidator<CreateTaskListCommand> _validator;
 
 
-        public CreateTaskListCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public CreateTaskListCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateTaskListCommand> validator)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _validator = validator;
         }
 
         public async Task<BaseResponse<CreateTaskListResponse>> Handle(CreateTaskListCommand request, CancellationToken cancellationToken)
@@ -26,7 +29,9 @@ namespace Application.TaskLists.Commands.CreateTsksListCommand
             try
             {
 
-                string userId = StringFunctions.GetUserSub(request.Token);
+                await _validator.ValidateAndThrowAsync(request);
+
+                string userId = StringFunctions.GetUserSub(request.UserSubProvider);
 
                 User user = await _unitOfWork.users.GetByIdAsync(userId);
 
@@ -47,6 +52,7 @@ namespace Application.TaskLists.Commands.CreateTsksListCommand
 
                 return new BaseResponse<CreateTaskListResponse>(response, true, "TaskList created successfully");
             }
+         
             catch (Exception e)
             {
                 return new BaseResponse<CreateTaskListResponse>(null, false, $"Error: {e.Message}");

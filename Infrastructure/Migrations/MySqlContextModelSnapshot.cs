@@ -45,8 +45,9 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("IsImportant")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime?>("ReminderDate")
-                        .HasColumnType("datetime(6)");
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int>("TaskListId")
                         .HasColumnType("int");

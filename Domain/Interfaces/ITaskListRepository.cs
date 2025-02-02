@@ -1,17 +1,22 @@
-﻿using Domain.Entities;
+﻿using Domain.Dtos.TaskLists;
+using Domain.Entities;
 using Domain.Interfaces.IPatternRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+
 
 namespace Domain.Interfaces
 {
     public interface ITaskListRepository : IRepostory<TaskList,int>
     {
-        Task<TaskList> GetTaskListWithTasks(int Id);
-        Task<TaskList> GetDefatultTaskListWithTasks(string userId);
-        Task<IEnumerable<TaskList>> GetTMyTaskLists(string userId);
+        //Task<TaskList> GetTaskListWithTasks(int Id, string userId);
+
+        Task<List<TaskList>> GetAllTaskListWithRelations(string userId);
+        Task<List<TaskList>> GetAllTaskListWithCompletedTasks(string userId);
+
+        Task<TaskList> GetTaskListById(int TaskListId, string userId);
+
+        Task<List<TaskListsWithNumberOfTasks>> GetTaskListWithNumberOfTasks(string userId);
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application.Commons.Responses;
+using Application.TaskLists.Commands.CreateTasksListCommand.Response;
 using Application.TaskLists.Commands.CreateTsksListCommand.Dtos;
 using MediatR;
 using System;
@@ -12,13 +13,13 @@ namespace Application.TaskLists.Commands.CreateTsksListCommand
     public class CreateTaskListCommand : IRequest<BaseResponse<CreateTaskListResponse>>
     {
         public CreateTaskListDto createTaskListDto { get; set; }
-        public string Token { get; set; }
+        public string UserSubProvider { get; set; }
 
-        public CreateTaskListCommand(CreateTaskListDto _createTaskListDto, string userId)
+        public CreateTaskListCommand(CreateTaskListDto _createTaskListDto, string _UserSubProvider)
         {
             createTaskListDto = _createTaskListDto;
 
-            Token = userId;
+            UserSubProvider = _UserSubProvider;
         }
     }
 }

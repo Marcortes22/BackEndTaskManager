@@ -34,9 +34,9 @@ namespace API.Extensions
                          {
                              context.HandleResponse();
 
-                             if(context.AuthenticateFailure != null)
-                             {
+                            
                              context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+
                              context.Response.ContentType = "application/json";
 
                              BaseResponse<string> UnauthorizedResponse = new BaseResponse<string>("", false, "Your session has expired");
@@ -46,7 +46,7 @@ namespace API.Extensions
                              Console.WriteLine(UnauthorizeJsondResponse);
 
                               await context.HttpContext.Response.WriteAsync(UnauthorizeJsondResponse);
-                             }
+                             
 
                          }
                     };

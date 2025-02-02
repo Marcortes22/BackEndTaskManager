@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\TaskItems\" />
-    <Folder Include="Handlers\TaskItems\" />
-    <Folder Include="Queries\TaskItems\" />
-    <Folder Include="Queries\TaskLists\" />
-    <Folder Include="Responses\TaskItems\" />
-    <Folder Include="Validations\" />
+    <Folder Include="TaskItems\Commands\" />
+    <Folder Include="TaskItems\Queries\GetImportantTasks\Dto\" />
+    <Folder Include="TaskItems\Queries\GetPlannedTasks\Dto\" />
+    <Folder Include="TaskItems\Queries\GetTodayTasks\Dto\" />
+    <Folder Include="TaskLists\Queries\GetAllTaskListsWithTasks\Dto\" />
+    <Folder Include="TaskLists\Queries\GetAllTaskListsWithTasks\Response\" />
+    <Folder Include="TaskLists\Queries\GetAllTaskListWithCompletedTasks\Response\" />
+    <Folder Include="Users\Queries\" />
   </ItemGroup>
 
   <ItemGroup>
