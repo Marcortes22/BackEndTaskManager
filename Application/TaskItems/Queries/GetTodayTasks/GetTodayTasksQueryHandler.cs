@@ -31,8 +31,8 @@ namespace Application.TaskItems.Queries.GetTodayTasks
             try
             {
                 string userId = StringFunctions.GetUserSub(request.UserSubProvider);
-
-                var allTodayTasks = await _unitOfWork.taskItems.getMyDayTasks(userId);
+                //SOLAMENTE TIENE LA ZONA HORARIA DE COSTA RICA POR EL MOMENTO
+                var allTodayTasks = await _unitOfWork.taskItems.getMyDayTasks(userId, "Central America Standard Time");
                 Console.WriteLine(allTodayTasks);
 
                 GetTodayTasksResponse response = new();

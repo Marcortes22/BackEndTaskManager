@@ -1,8 +1,12 @@
 ﻿using Application.Commons.Responses;
+using Application.TaskItems.Commands.CreateTaskItemCommand;
+using Application.TaskItems.Commands.CreateTaskItemCommand.Dto;
 using Application.TaskItems.Queries.GetCompletedTasks;
 using Application.TaskItems.Queries.GetImportantTasks;
 using Application.TaskItems.Queries.GetPlannedTasks;
 using Application.TaskItems.Queries.GetTodayTasks;
+using Application.TaskLists.Commands.CreateTsksListCommand.Dtos;
+
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -22,6 +26,47 @@ namespace API.Controllers
         {
             _mediator = mediator;
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> CreateTaskItem([FromBody] CreateTaskItemDto createTaskItemDto)
+        {
+
+            try
+            {
+                Console.WriteLine(createTaskItemDto.AddedToMyDay);
+
+                string UserSubProvider = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (UserSubProvider == null)
+                {
+                    BaseResponse<string> badResponse = new(null, false, "User not found");
+
+                    return BadRequest(badResponse);
+                }
+
+                var command = new CreateTaskItemCommand(createTaskItemDto, UserSubProvider);
+
+                var response = await _mediator.Send(command);
+
+
+                if (response.Success) { 
+                
+                return Ok(response);
+                }
+
+                return BadRequest(response);
+            }
+            catch (Exception e)
+            {
+                BaseResponse<string> badResponse = new BaseResponse<string>(null, false, $"Error: {e.Message}");
+
+                return BadRequest(badResponse);
+            }
+
+        }
+
+
 
         [HttpGet("GetMyDayTasks")]
         public async Task<IActionResult> GetMyDayTasks()
@@ -47,7 +92,7 @@ namespace API.Controllers
                 }
                 return BadRequest(response);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 BaseResponse<string> badResponse = new BaseResponse<string>(null, false, $"Error: {e.Message}");
 
@@ -79,7 +124,7 @@ namespace API.Controllers
                 }
                 return BadRequest(response);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 BaseResponse<string> badResponse = new BaseResponse<string>(null, false, $"Error: {e.Message}");
 
@@ -111,7 +156,7 @@ namespace API.Controllers
                 }
                 return BadRequest(response);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 BaseResponse<string> badResponse = new BaseResponse<string>(null, false, $"Error: {e.Message}");
 
@@ -143,12 +188,14 @@ namespace API.Controllers
                 }
                 return BadRequest(response);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 BaseResponse<string> badResponse = new BaseResponse<string>(null, false, $"Error: {e.Message}");
 
                 return BadRequest(badResponse);
             }
         }
+
+       
     }
 }

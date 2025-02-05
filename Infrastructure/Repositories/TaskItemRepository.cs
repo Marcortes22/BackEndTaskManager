@@ -32,26 +32,35 @@ namespace Infrastructure.Repositories
 
         public async Task<int> getMyDayTasksNumber(string userId)
         {
-            var today = DateTime.Today.Date;
+            var today = DateTime.UtcNow.Date;
 
-            return await _dbSet.CountAsync(tl => tl.TaskList.User.Id == userId && tl.DueDate.HasValue && tl.DueDate.Value.Date == today && tl.IsCompleted == false);
+            return await _dbSet.CountAsync(tl => tl.TaskList.User.Id == userId && tl.AddedToMyDay.HasValue && tl.AddedToMyDay.Value.Date == today && tl.IsCompleted == false);
         }
 
         public async Task<int> getPlannedTasksNumber(string userId)
         {
-            var today = DateTime.Today.Date;
-            return await _dbSet.CountAsync(tl => tl.TaskList.User.Id == userId && tl.DueDate.HasValue &&  tl.DueDate.Value.Date == today && tl.IsCompleted == false);
+            //var today = DateTime.Today.Date;
+            //return await _dbSet.CountAsync(tl => tl.TaskList.User.Id == userId && tl.DueDate.HasValue &&  tl.DueDate.Value.Date == today && tl.IsCompleted == false);
+            return await _dbSet.CountAsync(tl => tl.TaskList.User.Id == userId && tl.DueDate.HasValue && tl.IsCompleted == false);
         }
         public async Task<IEnumerable<TaskItem>> GetCompletedTasks(string sub)
         {
             return await FindAsync(tl=> tl.IsCompleted == true && tl.TaskList.User.Id == sub);
         }
 
-        public async Task<IEnumerable<TaskItem>> getMyDayTasks(string userId)
+        public async Task<IEnumerable<TaskItem>> getMyDayTasks(string userId, string userTimezoneId)
         {
-            var today = DateTime.Today.Date;
+            // Obtener la fecha actual en la zona horaria del usuario
+            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(userTimezoneId);
 
-            return await _dbSet.Where(ti => ti.TaskList.User.Id == userId && ti.DueDate == today).ToListAsync();
+            DateTime userLocalDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, userTimeZone).Date;
+
+            // Obtener las tareas de hoy según la zona horaria del usuario
+            return await _dbSet
+                .Where(ti => ti.TaskList.User.Id == userId &&
+                             TimeZoneInfo.ConvertTimeFromUtc(ti.AddedToMyDay.Value, userTimeZone).Date == userLocalDate)
+                .OrderBy(ti => ti.AddedToMyDay)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<TaskItem>> getImportantTasks(string userId)

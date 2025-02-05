@@ -30,6 +30,9 @@ namespace Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("AddedToMyDay")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<DateTime?>("Completed")
                         .HasColumnType("datetime(6)");
 
@@ -46,7 +49,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Note")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("TaskListId")

@@ -7,13 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="TaskItems\Commands\" />
+    <Folder Include="TaskItems\Commands\DeleteTaskItemCommand]\" />
+    <Folder Include="TaskItems\Commands\UpdateTaskItemCommand\" />
     <Folder Include="TaskItems\Queries\GetImportantTasks\Dto\" />
     <Folder Include="TaskItems\Queries\GetPlannedTasks\Dto\" />
     <Folder Include="TaskItems\Queries\GetTodayTasks\Dto\" />
     <Folder Include="TaskLists\Queries\GetAllTaskListsWithTasks\Dto\" />
     <Folder Include="TaskLists\Queries\GetAllTaskListsWithTasks\Response\" />
     <Folder Include="TaskLists\Queries\GetAllTaskListWithCompletedTasks\Response\" />
+    <Folder Include="TaskLists\Queries\GetMyTaskLists\Response\" />
     <Folder Include="Users\Queries\" />
   </ItemGroup>
 

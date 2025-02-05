@@ -18,6 +18,20 @@ namespace Infrastructure.ModelConfiguration
             builder.HasOne(ti => ti.TaskList)
                 .WithMany(tl => tl.TaskItems)
                 .HasForeignKey(ti => ti.TaskListId);
+        
+
+            builder.Property(ti => ti.DueDate)
+               .IsRequired(false);
+
+            builder.Property(ti => ti.Completed)
+               .IsRequired(false);
+
+            builder.Property(ti => ti.Note)
+              .IsRequired(false);
+
+            builder.Property(ti => ti.AddedToMyDay)
+              .IsRequired(false);
+
         }
     }
 }

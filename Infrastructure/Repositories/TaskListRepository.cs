@@ -55,5 +55,10 @@ namespace Infrastructure.Repositories
         {
             return _dbSet.Where(tl => tl.UserId == userId).Include(tl => tl.TaskItems.Where(ti => ti.IsCompleted == true)).ToListAsync();
         }
+
+        public Task<List<TaskList>> GetMyTaskLists(string userId)
+        {
+            return _dbSet.Where(tl => tl.UserId == userId).ToListAsync();
+        }
     }
 }

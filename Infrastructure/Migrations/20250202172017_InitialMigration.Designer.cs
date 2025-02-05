@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(MySqlContext))]
-    [Migration("20250121005052_addCascadeOnDelete")]
-    partial class addCascadeOnDelete
+    [Migration("20250202172017_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,9 @@ namespace Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("AddedToMyDay")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<DateTime?>("Completed")
                         .HasColumnType("datetime(6)");
 
@@ -48,8 +51,8 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("IsImportant")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime?>("ReminderDate")
-                        .HasColumnType("datetime(6)");
+                    b.Property<string>("Note")
+                        .HasColumnType("longtext");
 
                     b.Property<int>("TaskListId")
                         .HasColumnType("int");

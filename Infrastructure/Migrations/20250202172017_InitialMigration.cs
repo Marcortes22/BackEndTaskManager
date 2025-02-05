@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,7 +34,9 @@ namespace Infrastructure.Migrations
                     updatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     email = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    emailVerified = table.Column<bool>(type: "tinyint(1)", nullable: true)
+                    emailVerified = table.Column<bool>(type: "tinyint(1)", nullable: true),
+                    provider = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -79,8 +81,10 @@ namespace Infrastructure.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     DueDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     Completed = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    ReminderDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    TaskListId = table.Column<int>(type: "int", nullable: false)
+                    AddedToMyDay = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    TaskListId = table.Column<int>(type: "int", nullable: false),
+                    Note = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {

@@ -15,6 +15,8 @@ namespace Domain.Interfaces
 
         Task<TaskList> GetTaskListById(int TaskListId, string userId);
 
+        Task<List<TaskList>> GetMyTaskLists(string userId);
+
         Task<List<TaskListsWithNumberOfTasks>> GetTaskListWithNumberOfTasks(string userId);
 
 

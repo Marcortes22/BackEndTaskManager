@@ -41,6 +41,7 @@ namespace Application.TaskLists.Queries.GetTaskListInformation
                 int totalMyDayTasks = await _unitOfWork.taskItems.getMyDayTasksNumber(userId);
                 int totalPlannedTasks = await _unitOfWork.taskItems.getPlannedTasksNumber(userId);
 
+
                 response.AddRange(new List<GetTaskListInformationResponse>
                 {
                     new GetTaskListInformationResponse

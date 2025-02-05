@@ -12,7 +12,7 @@ namespace Domain.Interfaces
     {
         Task<int> getMyDayTasksNumber(string userId);
 
-        Task<IEnumerable<TaskItem>> getMyDayTasks(string userId);
+        Task<IEnumerable<TaskItem>> getMyDayTasks(string userId, string userTimezoneId);
 
         Task<int> getImportantTasksNumber(string userId);
 

@@ -34,7 +34,7 @@ builder.Services.AddControllersWithViews()
             //options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
         });
 
-builder.Services.AddCorsPolicy();
+builder.Services.AddCorsPolicy(builder.Configuration);
 builder.Services.AddDatabaseConfiguration(builder.Configuration["MySqlConnection"]);
 builder.Services.AddAuth0Authentication(builder.Configuration);
 builder.Services.AddAuth0Authorization(builder.Configuration);

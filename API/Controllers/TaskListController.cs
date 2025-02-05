@@ -8,6 +8,7 @@ using Application.TaskLists.Commands.UpdateTaskListCommand;
 using Application.TaskLists.Commands.UpdateTaskListCommand.Dto;
 using Application.TaskLists.Queries.GetAllTaskLists;
 using Application.TaskLists.Queries.GetAllTaskListWithCompletedTasks;
+using Application.TaskLists.Queries.GetMyTaskLists;
 using Application.TaskLists.Queries.GetTaskListById;
 using Application.TaskLists.Queries.GetTaskListInformation;
 using Application.TaskLists.Queries.GetTaskListInformation.Dto;
@@ -264,9 +265,42 @@ namespace API.Controllers
             }
         }
 
-        
+
+        [HttpGet("getMyTaskLists")]
+        public async Task<IActionResult> getMyTaskLists()
+        {
+            try
+            {
+                string UserSubProvider = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (UserSubProvider == null)
+                {
+                    BaseResponse<string> badResponse = new BaseResponse<string>(null, false, "User not found");
+
+                    return BadRequest(badResponse);
+                }
+
+                var query = new GetMyTaskListsQuery(UserSubProvider);
+
+                var response = await _mediator.Send(query);
+
+                if (response.Success)
+                {
+                    return Ok(response);
+                }
+                return BadRequest(response);
+            }
+            catch (Exception e)
+            {
+                BaseResponse<string> badResponse = new BaseResponse<string>(null, false, $"Error: {e.Message}");
+
+                return BadRequest(badResponse);
+            }
+
+
 
 
 
         }
+    }
 }
