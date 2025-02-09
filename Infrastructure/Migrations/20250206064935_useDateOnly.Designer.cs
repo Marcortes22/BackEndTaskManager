@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
-    [DbContext(typeof(MySqlContext))]
+    [DbContext(typeof(MyDbContext))]
     [Migration("20250206064935_useDateOnly")]
     partial class useDateOnly
     {

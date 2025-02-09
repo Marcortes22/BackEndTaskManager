@@ -7,14 +7,12 @@ namespace API.Extensions
     {
         public static IServiceCollection AddDatabaseConfiguration(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<MySqlContext>(options =>
-                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), b =>
-                    b.MigrationsAssembly("Infrastructure"))
-                       .EnableSensitiveDataLogging() // Solo para desarrollo
-                       .EnableDetailedErrors()
-            );
+            services.AddDbContext<MyDbContext>(options =>
+                options.UseNpgsql(connectionString));
 
             return services;
         }
     }
 }
+
+

@@ -13,7 +13,7 @@ namespace Infrastructure.Repositories.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private readonly MySqlContext _context;
+        private readonly MyDbContext _context;
         private readonly ILogger _logger;
         private IDbContextTransaction  _objTran;
         private bool _disposed;
@@ -23,7 +23,7 @@ namespace Infrastructure.Repositories.UnitOfWork
 
         public ITaskItemRepository taskItems { get; private set; }
 
-        public UnitOfWork(MySqlContext context, ILoggerFactory loggerFactory)
+        public UnitOfWork(MyDbContext context, ILoggerFactory loggerFactory)
         {
             _context = context;
             _logger = loggerFactory.CreateLogger("logs");

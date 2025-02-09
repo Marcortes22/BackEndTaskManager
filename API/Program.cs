@@ -35,7 +35,7 @@ builder.Services.AddControllersWithViews()
         });
 
 builder.Services.AddCorsPolicy(builder.Configuration);
-builder.Services.AddDatabaseConfiguration(builder.Configuration["MySqlConnection"]);
+builder.Services.AddDatabaseConfiguration(builder.Configuration["PostGresConnection"]);
 builder.Services.AddAuth0Authentication(builder.Configuration);
 builder.Services.AddAuth0Authorization(builder.Configuration);
 

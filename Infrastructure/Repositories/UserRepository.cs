@@ -15,7 +15,7 @@ namespace Infrastructure.Repositories
     public class UserRepository : Repository<User, string>, IUserRepository
     {
         
-        public UserRepository(MySqlContext context, ILogger logger) : base(context, logger)
+        public UserRepository(MyDbContext context, ILogger logger) : base(context, logger)
         {
          
         }

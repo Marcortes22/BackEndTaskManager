@@ -11,7 +11,7 @@ namespace Infrastructure.Repositories
 {
     public class TaskListRepository : Repository<TaskList, int>, ITaskListRepository
     {
-        public TaskListRepository(MySqlContext context, ILogger logger) : base(context, logger)
+        public TaskListRepository(MyDbContext context, ILogger logger) : base(context, logger)
         {
         }
 

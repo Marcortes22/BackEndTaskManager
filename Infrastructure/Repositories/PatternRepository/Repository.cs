@@ -13,11 +13,11 @@ namespace Infrastructure.Repositories.PatternRepository
 {
     public class Repository<T, TKey> : IRepostory<T, TKey> where T : class
     {
-        protected readonly MySqlContext _context;
+        protected readonly MyDbContext _context;
         protected readonly DbSet<T> _dbSet;
         protected readonly ILogger _logger;
 
-        public Repository(MySqlContext context, ILogger logger)
+        public Repository(MyDbContext context, ILogger logger)
         {
             _context = context;
             _dbSet = context.Set<T>();

@@ -10,7 +10,7 @@ namespace Infrastructure.Repositories
 {
     public class TaskItemRepository : Repository<TaskItem,int>, ITaskItemRepository
     {
-        public TaskItemRepository(MySqlContext context, ILogger logger) : base(context, logger)
+        public TaskItemRepository(MyDbContext context, ILogger logger) : base(context, logger)
         {
         }
 
