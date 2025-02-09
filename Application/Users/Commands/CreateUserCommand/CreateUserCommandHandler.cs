@@ -27,14 +27,25 @@ namespace Application.Users.Commands.CreateUserCommand
 
             try
             {
-                UserInfoDto userInfo = await _auth0Service.getUserInformation(request.createUserDto.auth0Token);
+                UserInfoDto userInfo = await _auth0Service.getUserInformation(request.auth0Token);
 
                 User existsUser = await _unitOfWork.users.GetByIdAsync(userInfo.sub);
 
                 if (existsUser != null)
                 {
 
+                    if(existsUser.timeZone != request.createUserDto.timeZone)
+                    {
+                        existsUser.timeZone = request.createUserDto.timeZone;
+
+                        await _unitOfWork.users.UpdateAsync(existsUser);
+
+                        await _unitOfWork.SaveChangesAsync();
+                    }
+
                     CreateUserResponse responseExists = _mapper.Map<CreateUserResponse>(existsUser);
+
+                    responseExists.isNewUser = false;
 
                     return new BaseResponse<CreateUserResponse>(responseExists, true, "User already exists in app");
                 }
@@ -43,12 +54,15 @@ namespace Application.Users.Commands.CreateUserCommand
 
                 user.TaskLists.Add(TaskList.getDefaultTaskList());
 
+                user.timeZone = request.createUserDto.timeZone;
+
                 User createdUser = await _unitOfWork.users.AddAsync(user);
 
                 await _unitOfWork.SaveChangesAsync();
 
                 CreateUserResponse responseNotExists = _mapper.Map<CreateUserResponse>(createdUser);
 
+                responseNotExists.isNewUser = true;
 
                 return new BaseResponse<CreateUserResponse>(responseNotExists, true, "User created successfully");
 

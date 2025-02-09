@@ -18,6 +18,9 @@ namespace Infrastructure.ModelConfiguration
             builder.Property( u => u.Id)
                 .ValueGeneratedNever();
 
+            builder.Property(u=> u.timeZone)
+                .IsRequired();
+
             builder.HasMany(u => u.TaskLists)
                 .WithOne(tl => tl.User)
                 .HasForeignKey(tl => tl.UserId)

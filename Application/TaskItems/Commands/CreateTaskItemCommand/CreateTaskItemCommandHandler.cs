@@ -37,6 +37,7 @@ namespace Application.TaskItems.Commands.CreateTaskItemCommand
                 await _validator.ValidateAndThrowAsync(request);
 
                 string userId = StringFunctions.GetUserSub(request.UserSubProvider);
+
                 var existTaskList = await _unitOfWork.taskLists.GetTaskListById(request.createTaskItemDto.TaskListId, userId);
 
                 if (existTaskList == null)
@@ -47,7 +48,8 @@ namespace Application.TaskItems.Commands.CreateTaskItemCommand
         
 
                 TaskItem newTaskItem = _mapper.Map<TaskItem>(request.createTaskItemDto);
-                var today = DateTime.Today;
+
+                var today = DateTime.UtcNow;
                 
 
                 newTaskItem.CreatedDate = today;

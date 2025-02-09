@@ -33,12 +33,26 @@ namespace Application.TaskLists.Queries.GetTaskListInformation
 
                 string userId = StringFunctions.GetUserSub(request.getTaskListsInformationDto.UserSubProvider);
 
+                string timeZoneId = await _unitOfWork.users.GetUserTimeZone(userId);
+
+                Console.WriteLine(timeZoneId);
+
+                if (timeZoneId == null)
+                {
+                    timeZoneId = "America/Guatemala";
+                }
+
+                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
+
+
                 var Tasklists = await _unitOfWork.taskLists.GetTaskListWithNumberOfTasks(userId);
+
+
 
                 int totalTasks = await _unitOfWork.taskItems.getAllTasksNumber(userId);
                 int totalCompletedTasks = await _unitOfWork.taskItems.getCompletedTasksNumber(userId);
                 int totalImportantTasks = await _unitOfWork.taskItems.getImportantTasksNumber(userId);
-                int totalMyDayTasks = await _unitOfWork.taskItems.getMyDayTasksNumber(userId);
+                int totalMyDayTasks = await _unitOfWork.taskItems.getMyDayTasksNumber(userId, userTimeZone);
                 int totalPlannedTasks = await _unitOfWork.taskItems.getPlannedTasksNumber(userId);
 
 

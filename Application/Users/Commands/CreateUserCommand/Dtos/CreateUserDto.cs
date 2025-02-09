@@ -8,11 +8,14 @@ namespace Application.Users.Commands.CreateUserCommand.Dtos
 {
     public class CreateUserDto
     {
-        public string auth0Token { get; set; }
+        
 
-        public CreateUserDto(string _auth0Token)
+        public string timeZone { get; set; }
+
+        public CreateUserDto( string timeZone)
         {
-            auth0Token = _auth0Token;
+  
+            this.timeZone = timeZone;
         }
     }
 }

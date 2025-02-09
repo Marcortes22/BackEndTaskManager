@@ -34,6 +34,10 @@ namespace Application.TaskLists.Queries.GetTaskListById
                 List<TaskItem> completed = new();
                 List<TaskItem> unCompleted = new();
 
+                if (tasks == null) {
+                    return new BaseResponse<GetTaskListByIdResponse>(null, false, "Error:");
+                }
+
                 foreach (var task in tasks.TaskItems)
                 {
                     if (task.IsCompleted == false)

@@ -11,7 +11,9 @@ namespace Domain.Interfaces
     public interface IUserRepository : IRepostory<User,string>
     {
         Task<User> GetUserWithTaskListsAsync(string sub);
-        
+
+        Task<string> GetUserTimeZone(string sub);
+
 
     }
 }

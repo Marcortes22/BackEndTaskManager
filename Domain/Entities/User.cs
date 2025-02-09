@@ -19,6 +19,8 @@ namespace Domain.Entities
         public bool? emailVerified { get; set; }
         public string? provider { get; set; }
         public ICollection<TaskList> TaskLists { get; set; } = new List<TaskList>();
+
+        public string timeZone { get; set; }
        
 
 

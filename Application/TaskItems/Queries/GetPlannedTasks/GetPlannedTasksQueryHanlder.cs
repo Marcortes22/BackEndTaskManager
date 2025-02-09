@@ -31,10 +31,30 @@ namespace Application.TaskItems.Queries.GetPlannedTasks
 
                 string userId = StringFunctions.GetUserSub(request.UserSubProvider);
 
-                var todayDate = DateTime.Now;
+                string timeZoneId = await _unitOfWork.users.GetUserTimeZone(userId);
+
+                Console.WriteLine(timeZoneId);
+
+                if (timeZoneId == null)
+                {
+                    timeZoneId = "America/Guatemala";
+                }
+
+                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
+
+                Console.WriteLine(userTimeZone);
+
+                DateTime userLocalDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, userTimeZone).Date;
+
+                DateOnly todayDate = DateOnly.FromDateTime(userLocalDate);
                 var tomorrowDate = todayDate.AddDays(1);
                 var thisWeekInitialDay = todayDate.AddDays(2);
                 var thisWeekFinallDay = todayDate.AddDays(7);
+
+                Console.WriteLine(todayDate);
+                Console.WriteLine(tomorrowDate);
+                Console.WriteLine(thisWeekInitialDay);
+
 
                 List<TaskItem> erlierTasks = new();
                 List<TaskItem> todayTasks = new();
@@ -44,21 +64,23 @@ namespace Application.TaskItems.Queries.GetPlannedTasks
 
                 var plannedTasks = await _unitOfWork.taskItems.getPlannedTasks(userId);
 
+                Console.WriteLine(plannedTasks);
+
 
                 foreach(var task in plannedTasks)
                 {
-                    if (task.DueDate?.Date == todayDate.Date)
+                    if (task.DueDate == todayDate)
                     {
                         todayTasks.Add(task);
                     }
-                    else if (task.DueDate?.Date < todayDate.Date)
+                    else if (task.DueDate < todayDate)
                     {
                         erlierTasks.Add(task);
-                    }else if (task.DueDate?.Date == tomorrowDate.Date)
+                    }else if (task.DueDate == tomorrowDate)
                     {
                         tomorrowTasks.Add(task);
                     }
-                    else if (task.DueDate?.Date >= thisWeekInitialDay.Date && task.DueDate?.Date <= thisWeekFinallDay.Date)
+                    else if (task.DueDate >= thisWeekInitialDay && task.DueDate <= thisWeekFinallDay)
                     {
                         thisWeekTasks.Add(task);
                     }

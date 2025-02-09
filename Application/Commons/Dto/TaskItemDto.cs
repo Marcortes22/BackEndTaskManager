@@ -13,7 +13,7 @@ namespace Application.Commons.Dto
         public Boolean IsCompleted { get; set; }
         public Boolean IsImportant { get; set; }
         public DateTime CreatedDate { get; set; }
-        public DateTime? DueDate { get; set; } = null;
+        public DateOnly? DueDate { get; set; } = null;
         public DateTime? Completed { get; set; } = null;
         public string Note { get; set; }
 

@@ -1,15 +1,16 @@
-﻿using Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.TaskItems.Commands.CreateTaskItemCommand.Dto
+namespace Application.TaskItems.Commands.UpdateTaskItemCommand.Dto
 {
-    public class CreateTaskItemDto
+    public class UpdateTaskItemDto
     {
-        public string Title { get; set; }
+
+       
+        public string? Title { get; set; } 
 
         public Boolean? IsCompleted { get; set; }
 
@@ -19,12 +20,6 @@ namespace Application.TaskItems.Commands.CreateTaskItemCommand.Dto
 
         public DateTime? AddedToMyDay { get; set; }
 
-        public int TaskListId { get; set; }
-
         public string? Note { get; set; }
     }
 }
-
-
-//public DateTime CreatedDate { get; set; }
-

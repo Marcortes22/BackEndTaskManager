@@ -8,6 +8,9 @@ namespace Application.Commons.Responses
 {
     public class BaseResponse<T>
     {
+        private bool v1;
+        private string v2;
+
         public bool Success { get; set; } = true;
         public string? Message { get; set; }
         public T? Data { get; set; }
@@ -18,5 +21,7 @@ namespace Application.Commons.Responses
             Message = message;
             Data = data;
         }
+
+      
     }
 }

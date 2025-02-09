@@ -31,17 +31,35 @@ namespace Application.TaskItems.Queries.GetTodayTasks
             try
             {
                 string userId = StringFunctions.GetUserSub(request.UserSubProvider);
-                //SOLAMENTE TIENE LA ZONA HORARIA DE COSTA RICA POR EL MOMENTO
-                var allTodayTasks = await _unitOfWork.taskItems.getMyDayTasks(userId, "Central America Standard Time");
-                Console.WriteLine(allTodayTasks);
+ 
+
+                string timeZoneId = await _unitOfWork.users.GetUserTimeZone(userId);
+
+                if (timeZoneId == null) {
+                    timeZoneId = "America/Guatemala";
+                }
+
+                TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
+
+                DateTime userLocalDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, userTimeZone).Date;
+
+              
+                IEnumerable<TaskItem> tasksWithAddedDay = await _unitOfWork.taskItems.getMyDayTasks(userId);
+
+                var todayTasks = from item in tasksWithAddedDay
+                                 where (TimeZoneInfo.ConvertTimeFromUtc(item.AddedToMyDay.Value, userTimeZone).Date == userLocalDate)
+                                 orderby item.AddedToMyDay descending
+                                 select item;
+
+             
 
                 GetTodayTasksResponse response = new();
 
-                List<TaskItem> Completed = allTodayTasks.Where(x => x.IsCompleted == true).ToList();
-                List<TaskItem> Uncomplete = allTodayTasks.Where(x => x.IsCompleted == false).ToList();
+                List<TaskItem> Completed = todayTasks.Where(x => x.IsCompleted == true).ToList();
+                List<TaskItem> Uncomplete = todayTasks.Where(x => x.IsCompleted == false).ToList();
 
                 response.CompletedTasks = _mapper.Map<List<TaskItemDto>>(Completed);
-                response.totalCount = allTodayTasks.Count();
+                response.totalCount = todayTasks.Count();
                 response.UncompletedTasks = _mapper.Map<List<TaskItemDto>>(Uncomplete);
                 response.CompletedCount = Completed.Count;
 

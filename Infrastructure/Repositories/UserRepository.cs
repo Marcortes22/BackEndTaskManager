@@ -20,6 +20,12 @@ namespace Infrastructure.Repositories
          
         }
 
+        public async Task<string> GetUserTimeZone(string sub)
+        {
+            return await _dbSet.Where(u => u.Id == sub)
+                .Select(u => u.timeZone)
+                .FirstOrDefaultAsync();
+        }
 
         public async Task<User> GetUserWithTaskListsAsync(string Id)
         {

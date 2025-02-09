@@ -10,9 +10,11 @@ namespace Domain.Interfaces
 {
     public interface ITaskItemRepository : IRepostory<TaskItem,int>
     {
-        Task<int> getMyDayTasksNumber(string userId);
+        Task<int> getMyDayTasksNumber(string userId, TimeZoneInfo userTimeZone);
 
-        Task<IEnumerable<TaskItem>> getMyDayTasks(string userId, string userTimezoneId);
+        //Task<IEnumerable<TaskItem>> getMyDayTasks(string userId, string userTimezoneId);
+
+        public Task<IEnumerable<TaskItem>> getMyDayTasks(string userId);
 
         Task<int> getImportantTasksNumber(string userId);
 
@@ -28,6 +30,7 @@ namespace Domain.Interfaces
         Task<int> getCompletedTasksNumber(string userId);
 
         Task<IEnumerable<TaskItem>> getCompletedTasks(string userId);
+        Task<TaskItem> getTaskByUserAndTaskId(string userId, int taskId);
 
 
     }

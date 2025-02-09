@@ -10,5 +10,7 @@ namespace Application.Users.Commands.CreateUserCommand.Dtos
     {
         public string Id { get; set; }
 
+        public bool isNewUser { get; set; }
+
     }
 }

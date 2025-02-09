@@ -21,8 +21,8 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("verifyAccound")]
-        public async Task<IActionResult> verifyAccound()
+        [HttpPost("verifyAccound")]
+        public async Task<IActionResult> verifyAccound([FromBody] CreateUserDto createUserDto)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace API.Controllers
                     return BadRequest(badResponse);
                 }
 
-                var command = new CreateUserCommand(new CreateUserDto(token));
+                var command = new CreateUserCommand(createUserDto, token);
 
             var response = await _mediator.Send(command);
 

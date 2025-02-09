@@ -25,7 +25,7 @@ namespace Infrastructure.Repositories
 
         public async Task<TaskList> GetTaskListById(int TaskListId, string userId)
         {
-            return await _dbSet.Include(tl => tl.TaskItems).FirstOrDefaultAsync(tl => tl.Id == TaskListId && tl.UserId == userId);
+            return await _dbSet.Include(tl => tl.TaskItems.OrderByDescending(ti=>ti.CreatedDate)).FirstOrDefaultAsync(tl => tl.Id == TaskListId && tl.UserId == userId);
         }
 
         public async Task<List<TaskListsWithNumberOfTasks>> GetTaskListWithNumberOfTasks(string userId)
@@ -48,12 +48,12 @@ namespace Infrastructure.Repositories
 
         public Task<List<TaskList>> GetAllTaskListWithRelations(string userId)
         {
-            return _dbSet.Where(tl=> tl.UserId == userId).Include(tl => tl.TaskItems.Where(ti => ti.IsCompleted == false)).ToListAsync();
+            return _dbSet.Where(tl=> tl.UserId == userId).Include(tl => tl.TaskItems.Where(ti => ti.IsCompleted == false).OrderByDescending(ti => ti.CreatedDate)).ToListAsync();
         }
 
         public Task<List<TaskList>> GetAllTaskListWithCompletedTasks(string userId)
         {
-            return _dbSet.Where(tl => tl.UserId == userId).Include(tl => tl.TaskItems.Where(ti => ti.IsCompleted == true)).ToListAsync();
+            return _dbSet.Where(tl => tl.UserId == userId).Include(tl => tl.TaskItems.Where(ti => ti.IsCompleted == true).OrderByDescending(ti => ti.CreatedDate)).ToListAsync();
         }
 
         public Task<List<TaskList>> GetMyTaskLists(string userId)

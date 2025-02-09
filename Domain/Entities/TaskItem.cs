@@ -13,7 +13,7 @@ namespace Domain.Entities
         public Boolean IsCompleted { get; set; }
         public Boolean IsImportant { get; set; }
         public DateTime CreatedDate { get; set; }
-        public DateTime? DueDate { get; set; }
+        public DateOnly? DueDate { get; set; }
         public DateTime? Completed { get; set; }
         public DateTime? AddedToMyDay { get; set; }
 
