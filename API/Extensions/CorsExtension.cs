@@ -10,7 +10,7 @@
                 {
                     
 
-                    policyBuilder.WithOrigins(_configuration["FrontEndUrl"], _configuration["FrontEndTunnelUrl"])
+                    policyBuilder.WithOrigins(_configuration["FrontEndUrl"])
                                  .AllowAnyHeader()
                                  .AllowAnyMethod()
                                  .AllowCredentials();
