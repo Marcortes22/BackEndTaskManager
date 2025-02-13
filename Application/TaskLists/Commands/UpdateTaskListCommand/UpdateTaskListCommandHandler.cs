@@ -32,7 +32,7 @@ namespace Application.TaskLists.Commands.UpdateTaskListCommand
 
                 string userId = StringFunctions.GetUserSub(request.UserSubProvider);
 
-                TaskList taskList = await _unitOfWork.taskLists.GetTaskListById(request.UpdateTaskListDto.Id, userId);
+                TaskList taskList = await _unitOfWork.taskLists.GetTaskListById(request.taskListId, userId);
 
                 if (taskList == null)
                 {

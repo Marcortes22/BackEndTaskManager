@@ -15,12 +15,15 @@ namespace Application.TaskLists.Commands.UpdateTaskListCommand
 
         public UpdateTaskListDto UpdateTaskListDto { get; set; }
 
+
+        public int taskListId { get; set; }
         public string UserSubProvider { get; set; }
 
-        public UpdateTaskListCommand(UpdateTaskListDto _updateTaskListDto, string _UserSubProvider)
+        public UpdateTaskListCommand(UpdateTaskListDto _updateTaskListDto, int _taskListId, string _UserSubProvider)
         {
             UpdateTaskListDto = _updateTaskListDto;
             UserSubProvider = _UserSubProvider;
+            taskListId = _taskListId;
         }
 
     }

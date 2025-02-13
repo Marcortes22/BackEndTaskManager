@@ -13,7 +13,7 @@ namespace Application.TaskLists.Commands.UpdateTaskListCommand.Validator
         { 
             RuleFor(x => x.UpdateTaskListDto.NewName).NotEmpty().WithMessage("New Name is required");
             RuleFor(x => x.UpdateTaskListDto.NewName).MaximumLength(20).WithMessage("New Name must not exceed 20 characters");
-            RuleFor(x => x.UpdateTaskListDto.Id).NotEmpty().WithMessage("Id is required");
+            RuleFor(x => x.taskListId).NotEmpty().WithMessage("Id is required");
             RuleFor(x => x.UserSubProvider).NotEmpty().WithMessage("UserId is required");
 
 

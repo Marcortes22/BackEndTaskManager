@@ -100,8 +100,8 @@ namespace API.Controllers
             }
         }
 
-        [HttpPut("updateTaskList")]
-        public async Task<IActionResult> updateTaskList([FromBody] UpdateTaskListDto updateTaskListDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> updateTaskList([FromBody] UpdateTaskListDto updateTaskListDto, int id)
         {
             try
             {
@@ -114,7 +114,7 @@ namespace API.Controllers
                     return BadRequest(badResponse);
                 }
 
-                var command = new UpdateTaskListCommand(updateTaskListDto, UserSubProvider);
+                var command = new UpdateTaskListCommand(updateTaskListDto,id, UserSubProvider);
 
                 var response = await _mediator.Send(command);
 
@@ -132,8 +132,8 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete("deleteTaskList")]
-        public async Task<IActionResult> deleteTaskList([FromBody] DeleteTaskListDto deleteTaskListDto)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> deleteTaskList(int id)
         {
             try
             {
@@ -146,7 +146,7 @@ namespace API.Controllers
                     return BadRequest(badResponse);
                 }
 
-                var command = new DeleteTaskListCommand(deleteTaskListDto, UserSubProvider);
+                var command = new DeleteTaskListCommand(id, UserSubProvider);
 
                 var response = await _mediator.Send(command);
 

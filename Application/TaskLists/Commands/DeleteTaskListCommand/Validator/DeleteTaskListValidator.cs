@@ -11,7 +11,7 @@ namespace Application.TaskLists.Commands.DeleteTaskListCommand.Validator
     {
         public DeleteTaskListValidator() { 
         
-            RuleFor(x => x.deleteTaskListDto.Id).NotEmpty().WithMessage("Id is required");
+            RuleFor(x => x.taskListId).NotEmpty().WithMessage("Id is required");
             RuleFor(x => x.userSubProvider).NotEmpty().WithMessage("UserSubProvider is required");
         }
     }

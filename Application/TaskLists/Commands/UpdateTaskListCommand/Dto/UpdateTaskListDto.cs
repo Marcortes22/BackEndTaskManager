@@ -10,6 +10,5 @@ namespace Application.TaskLists.Commands.UpdateTaskListCommand.Dto
     {
         public string? NewName { get; set; }
 
-        public int Id { get; set; }
     }
 }

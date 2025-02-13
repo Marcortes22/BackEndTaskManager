@@ -37,11 +37,16 @@ namespace Application.TaskLists.Commands.DeleteTaskListCommand
 
                 string userId = StringFunctions.GetUserSub(request.userSubProvider);
 
-                TaskList taskList = await _unitOfWork.taskLists.GetTaskListById(request.deleteTaskListDto.Id, userId);
+                TaskList taskList = await _unitOfWork.taskLists.GetTaskListById(request.taskListId, userId);
 
                 if (taskList == null)
                 {
                     return new BaseResponse<DeleteTaskListResponse>(null, false, "TaskList not found");
+                }
+
+                if (taskList.IsDefault)
+                {
+                    return new BaseResponse<DeleteTaskListResponse>(null, false, "Default taskList can't be deleted");
                 }
 
                 await _unitOfWork.taskLists.DeleteAsync(taskList);

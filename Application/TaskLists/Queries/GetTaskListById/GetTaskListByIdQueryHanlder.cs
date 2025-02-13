@@ -57,6 +57,7 @@ namespace Application.TaskLists.Queries.GetTaskListById
                 response.completedTasks = _mapper.Map<List<TaskItemDto>>(completed);
                 response.uncompletedTasks = _mapper.Map<List<TaskItemDto>>(unCompleted);
                 response.completedTaskCount = completed.Count();
+               
 
 
 

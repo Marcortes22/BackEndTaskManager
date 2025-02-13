@@ -13,5 +13,9 @@ namespace Application.TaskLists.Queries.GetTaskListInformation.Response
         public int amoundOfTasks { get; set; }
 
         public string url { get; set; }
+
+        public bool? isDefault { get; set; }
+        
+        public int? Id { get; set; }
     }
 }

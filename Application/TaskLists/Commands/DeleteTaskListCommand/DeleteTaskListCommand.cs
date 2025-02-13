@@ -12,14 +12,14 @@ namespace Application.TaskLists.Commands.DeleteTaskListCommand
 {
     public class DeleteTaskListCommand : IRequest<BaseResponse<DeleteTaskListResponse>>
     {
-        public DeleteTaskListDto deleteTaskListDto { get; set; }
+        public int taskListId  { get; set; }
 
         public string userSubProvider { get; set; }
 
-        public DeleteTaskListCommand(DeleteTaskListDto _deleteTaskListDto, string _userSubProvider)
+        public DeleteTaskListCommand(int _taskListId, string _userSubProvider)
         {
-            deleteTaskListDto = _deleteTaskListDto;
             userSubProvider = _userSubProvider;
+            taskListId = _taskListId;
         }
     }
 }
