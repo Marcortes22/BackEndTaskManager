@@ -28,7 +28,8 @@ namespace Application.Users.Commands.CreateUserCommand
 
             try
             {
-               
+                Console.WriteLine(request.UserSubProvider);
+                Console.WriteLine(request.auth0Token);
 
                 string userId = StringFunctions.GetUserSub(request.UserSubProvider);
 

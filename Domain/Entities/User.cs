@@ -22,7 +22,7 @@ namespace Domain.Entities
 
         public string timeZone { get; set; }
 
-        public string backGroundImage { get; set; }
+        public string? backGroundImage { get; set; }
 
 
 

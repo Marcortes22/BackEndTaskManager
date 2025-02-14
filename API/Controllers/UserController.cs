@@ -28,7 +28,7 @@ namespace API.Controllers
             try
             {
 
-            var token = await HttpContext.GetTokenAsync("access_token");
+                var token = await HttpContext.GetTokenAsync("access_token");
                 string UserSubProvider = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
                 if (token == null)

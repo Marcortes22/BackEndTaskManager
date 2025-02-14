@@ -20,6 +20,8 @@ namespace Infrastructure.ModelConfiguration
 
             builder.Property(u=> u.timeZone)
                 .IsRequired();
+            builder.Property(u => u.backGroundImage)
+              .IsRequired(false);
 
             builder.HasMany(u => u.TaskLists)
                 .WithOne(tl => tl.User)
