@@ -9,7 +9,6 @@ namespace Application.Users.Commands.CreateUserCommand.Dtos
     public class CreateUserDto
     {
         
-
         public string timeZone { get; set; }
 
         public CreateUserDto( string timeZone)

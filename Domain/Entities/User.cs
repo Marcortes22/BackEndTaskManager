@@ -21,7 +21,9 @@ namespace Domain.Entities
         public ICollection<TaskList> TaskLists { get; set; } = new List<TaskList>();
 
         public string timeZone { get; set; }
-       
+
+        public string backGroundImage { get; set; }
+
 
 
     }
