@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -28,6 +29,7 @@ namespace API.Controllers
             {
 
             var token = await HttpContext.GetTokenAsync("access_token");
+                string UserSubProvider = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
                 if (token == null)
                 {
@@ -36,7 +38,7 @@ namespace API.Controllers
                     return BadRequest(badResponse);
                 }
 
-                var command = new CreateUserCommand(createUserDto, token);
+            var command = new CreateUserCommand(createUserDto, token, UserSubProvider);
 
             var response = await _mediator.Send(command);
 

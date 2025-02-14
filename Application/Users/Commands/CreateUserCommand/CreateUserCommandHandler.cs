@@ -3,6 +3,7 @@ using Application.Users.Commands.CreateUserCommand.Dtos;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces.IUnitOfWork;
+using Domain.Utils;
 using Infrastructure.Services.Auth0;
 using Infrastructure.Services.Auth0.Dto;
 using MediatR;
@@ -27,9 +28,11 @@ namespace Application.Users.Commands.CreateUserCommand
 
             try
             {
-                UserInfoDto userInfo = await _auth0Service.getUserInformation(request.auth0Token);
+               
 
-                User existsUser = await _unitOfWork.users.GetByIdAsync(userInfo.sub);
+                string userId = StringFunctions.GetUserSub(request.UserSubProvider);
+
+                User existsUser = await _unitOfWork.users.GetByIdAsync(userId);
 
                 if (existsUser != null)
                 {
@@ -49,6 +52,8 @@ namespace Application.Users.Commands.CreateUserCommand
 
                     return new BaseResponse<CreateUserResponse>(responseExists, true, "User already exists in app");
                 }
+
+                UserInfoDto userInfo = await _auth0Service.getUserInformation(request.auth0Token);
 
                 User user = _mapper.Map<User>(userInfo);
 

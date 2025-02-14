@@ -11,10 +11,13 @@ namespace Application.Users.Commands.CreateUserCommand
 
         public string auth0Token { get; set; }
 
-        public CreateUserCommand(CreateUserDto _createUserDto, string auth0Token)
+        public string UserSubProvider { get; set; }
+
+        public CreateUserCommand(CreateUserDto _createUserDto, string auth0Token, string userSubProvider)
         {
             createUserDto = _createUserDto;
             this.auth0Token = auth0Token;
+            UserSubProvider = userSubProvider;
         }
     }
 }

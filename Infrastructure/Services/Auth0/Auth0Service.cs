@@ -49,7 +49,7 @@ namespace Infrastructure.Services.Auth0
 
                 if (userInfo != null)
                 {
-                    //tupla
+                    
                     (string subProvider, string sub) = StringFunctions.SplitAuth0Indentity(userInfo.sub);
                     
                     userInfo.sub = sub;
