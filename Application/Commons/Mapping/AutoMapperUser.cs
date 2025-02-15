@@ -27,6 +27,8 @@ namespace Application.Commons.Mapping
 
             CreateMap<User, CreateUserResponse>().ReverseMap();
 
+            CreateMap<CreateUserDto, User>().ReverseMap();
+
         }
     }
 }
