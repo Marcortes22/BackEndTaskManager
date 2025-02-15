@@ -28,17 +28,16 @@ namespace API.Controllers
             try
             {
 
-                var token = await HttpContext.GetTokenAsync("access_token");
                 string UserSubProvider = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-                if (token == null)
+                if (UserSubProvider == null)
                 {
                     BaseResponse<string> badResponse = new (null, false, "User not found");
 
                     return BadRequest(badResponse);
                 }
 
-            var command = new CreateUserCommand(createUserDto, token, UserSubProvider);
+            var command = new CreateUserCommand(createUserDto);
 
             var response = await _mediator.Send(command);
 

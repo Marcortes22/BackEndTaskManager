@@ -28,12 +28,11 @@ namespace Application.Users.Commands.CreateUserCommand
 
             try
             {
-                Console.WriteLine(request.UserSubProvider);
-                Console.WriteLine(request.auth0Token);
+               
 
-                string userId = StringFunctions.GetUserSub(request.UserSubProvider);
+              
 
-                User existsUser = await _unitOfWork.users.GetByIdAsync(userId);
+                User existsUser = await _unitOfWork.users.GetByIdAsync(request.createUserDto.Id);
 
                 if (existsUser != null)
                 {
@@ -54,13 +53,11 @@ namespace Application.Users.Commands.CreateUserCommand
                     return new BaseResponse<CreateUserResponse>(responseExists, true, "User already exists in app");
                 }
 
-                UserInfoDto userInfo = await _auth0Service.getUserInformation(request.auth0Token);
+                //UserInfoDto userInfo = await _auth0Service.getUserInformation(request.auth0Token);
 
-                User user = _mapper.Map<User>(userInfo);
+                User user = _mapper.Map<User>(request.createUserDto);
 
                 user.TaskLists.Add(TaskList.getDefaultTaskList());
-
-                user.timeZone = request.createUserDto.timeZone;
 
                 User createdUser = await _unitOfWork.users.AddAsync(user);
 

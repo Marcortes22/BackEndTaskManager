@@ -18,7 +18,6 @@ namespace Infrastructure.Services.Auth0.Dto
         public DateTime? updated_at { get; set; }
         public string? email { get; set; }
         public bool? email_verified { get; set; }
-
         public string? provider { get; set; }
     }
 }
