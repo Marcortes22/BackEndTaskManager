@@ -30,8 +30,6 @@ namespace Application.Users.Commands.CreateUserCommand
             {
                
 
-              
-
                 User existsUser = await _unitOfWork.users.GetByIdAsync(request.createUserDto.Id);
 
                 if (existsUser != null)
