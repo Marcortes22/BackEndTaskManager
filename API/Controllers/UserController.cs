@@ -2,6 +2,8 @@
 using Application.Commons.Responses;
 using Application.Users.Commands.CreateUserCommand;
 using Application.Users.Commands.CreateUserCommand.Dtos;
+using Application.Users.Commands.UpdateUserCommand;
+using Application.Users.Commands.UpdateUserCommand.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -27,6 +29,7 @@ namespace API.Controllers
         {
             try
             {
+                Console.WriteLine(createUserDto);
 
                 string UserSubProvider = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -56,6 +59,39 @@ namespace API.Controllers
                 return BadRequest(badResponse);
             }
 
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> updateUser([FromBody] UpdateUserCommandDto updateUserDto)
+        {
+            try
+            {
+                string UserSubProvider = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (UserSubProvider == null)
+                {
+                    BaseResponse<string> badResponse = new BaseResponse<string>(null, false, "User not found");
+
+                    return BadRequest(badResponse);
+                }
+
+                var command = new UpdateUserCommnad(updateUserDto, UserSubProvider);
+
+                var response = await _mediator.Send(command);
+
+                if (response.Success)
+                {
+                    return Ok(response);
+                }
+
+                return BadRequest(response);
+            }
+            catch (Exception e)
+            {
+                BaseResponse<string> badResponse = new BaseResponse<string>(null, false, $"Error: {e.Message}");
+
+                return BadRequest(badResponse);
+            }
         }
     }
 }

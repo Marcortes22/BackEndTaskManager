@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Users.Validator
+namespace Application.Users.Commands.CreateUserCommand.Validator
 {
-    public class CreateUserValidator: AbstractValidator<CreateUserCommand>
+    public class CreateUserValidator : AbstractValidator<CreateUserCommand>
     {
         public CreateUserValidator()
         {

@@ -35,9 +35,10 @@ namespace Application.Users.Commands.CreateUserCommand
                 if (existsUser != null)
                 {
 
-                    if(existsUser.timeZone != request.createUserDto.timeZone)
+                    if (existsUser.timeZone != request.createUserDto.timeZone)
                     {
                         existsUser.timeZone = request.createUserDto.timeZone;
+            
 
                         await _unitOfWork.users.UpdateAsync(existsUser);
 
@@ -50,8 +51,6 @@ namespace Application.Users.Commands.CreateUserCommand
 
                     return new BaseResponse<CreateUserResponse>(responseExists, true, "User already exists in app");
                 }
-
-                //UserInfoDto userInfo = await _auth0Service.getUserInformation(request.auth0Token);
 
                 User user = _mapper.Map<User>(request.createUserDto);
 

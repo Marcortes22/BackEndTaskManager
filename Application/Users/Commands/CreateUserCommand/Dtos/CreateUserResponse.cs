@@ -12,5 +12,7 @@ namespace Application.Users.Commands.CreateUserCommand.Dtos
 
         public bool isNewUser { get; set; }
 
+        public string backGroundImage { get; set; }
+
     }
 }
