@@ -15,13 +15,13 @@ namespace Application.Users.Commands.CreateUserCommand
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IAuth0Service _auth0Service;
+        //private readonly IAuth0Service _auth0Service;
 
-        public CreateUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IAuth0Service auth0Service)
+        public CreateUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _auth0Service = auth0Service;
+            
         }
         public async Task<BaseResponse<CreateUserResponse>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {

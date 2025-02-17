@@ -39,7 +39,7 @@ builder.Services.AddDatabaseConfiguration(builder.Configuration["PostGresConnect
 builder.Services.AddAuth0Authentication(builder.Configuration);
 builder.Services.AddAuth0Authorization(builder.Configuration);
 
-builder.Services.AddServices();
+//builder.Services.AddServices();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CreateUserCommandHandler>());
