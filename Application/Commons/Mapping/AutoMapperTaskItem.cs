@@ -18,7 +18,7 @@ namespace Application.Commons.Mapping
 
         public AutoMapperTaskItem() { 
 
-        CreateMap<TaskItemDto, TaskItem>().ReverseMap();
+        CreateMap<TaskItem,TaskItemDto > ().ForMember(dest=>dest.taskListName, opt=> opt.MapFrom(src=>src.TaskList.Name));
 
         CreateMap<TaskItemDto, CreateTaskItemDto>().ReverseMap();
 

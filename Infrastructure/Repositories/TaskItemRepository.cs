@@ -62,35 +62,35 @@ namespace Infrastructure.Repositories
 
             return await _dbSet
                 .Where(ti => ti.TaskList.User.Id == userId &&
-                             ti.AddedToMyDay.HasValue)
+                             ti.AddedToMyDay.HasValue).Include(ti=>ti.TaskList)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<TaskItem>> getImportantTasks(string userId)
         {
-            return await _dbSet.Where(ti => ti.TaskList.User.Id == userId && ti.IsImportant && ti.IsCompleted == false).OrderByDescending(ti=>ti.CreatedDate).ToListAsync();
+            return await _dbSet.Where(ti => ti.TaskList.User.Id == userId && ti.IsImportant && ti.IsCompleted == false).Include(ti => ti.TaskList).OrderByDescending(ti=>ti.CreatedDate).ToListAsync();
         }
 
         public async Task<IEnumerable<TaskItem>> getPlannedTasks(string userId)
         {
             var today = DateTime.Today.Date;
 
-            return await _dbSet.Where(ti => ti.TaskList.User.Id == userId && ti.DueDate.HasValue  && ti.IsCompleted == false).OrderByDescending(ti => ti.CreatedDate).ToListAsync();
+            return await _dbSet.Where(ti => ti.TaskList.User.Id == userId && ti.DueDate.HasValue  && ti.IsCompleted == false).Include(ti => ti.TaskList).OrderByDescending(ti => ti.CreatedDate).ToListAsync();
         }
 
         public async Task<IEnumerable<TaskItem>> getAllTasks(string userId)
         {
-            return await _dbSet.Where(ti => ti.TaskList.User.Id == userId && ti.IsImportant && ti.IsCompleted == false).OrderByDescending(ti => ti.CreatedDate).ToListAsync();
+            return await _dbSet.Where(ti => ti.TaskList.User.Id == userId && ti.IsImportant && ti.IsCompleted == false).Include(ti => ti.TaskList).OrderByDescending(ti => ti.CreatedDate).ToListAsync();
         }
 
         public async Task<IEnumerable<TaskItem>> getCompletedTasks(string userId)
         {
-           return await _dbSet.Where(ti => ti.TaskList.User.Id == userId && ti.IsCompleted).OrderByDescending(ti => ti.CreatedDate).ToListAsync();
+           return await _dbSet.Where(ti => ti.TaskList.User.Id == userId && ti.IsCompleted).OrderByDescending(ti => ti.CreatedDate).Include(ti => ti.TaskList).ToListAsync();
         }
 
         public async Task<TaskItem> getTaskByUserAndTaskId(string userId, int taskId)
         {
-            return await _dbSet.Where(ti => ti.TaskList.User.Id == userId && ti.Id == taskId).FirstOrDefaultAsync();
+            return await _dbSet.Where(ti => ti.TaskList.User.Id == userId && ti.Id == taskId).Include(ti => ti.TaskList).FirstOrDefaultAsync();
         }
     }
 }

@@ -16,8 +16,9 @@ namespace Application.Commons.Dto
         public DateOnly? DueDate { get; set; } = null;
         public DateTime? Completed { get; set; } = null;
         public string Note { get; set; }
-
         public DateTime? addedToMyDay { get; set; } = null;
+
+        public string? taskListName { get; set; }
 
     }
 }
